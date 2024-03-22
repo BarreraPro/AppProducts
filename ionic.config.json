@@ -1,0 +1,7 @@
+{
+  "name": "NarrativeNet",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
