@@ -1,0 +1,90 @@
+/* Estilos para el contenedor del formulario */
+.login-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(../../../assets/img/fondo.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.5s ease; /* Transición de opacidad */
+}
+
+/* Estilos para el formulario */
+.auth-form {
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  transition: background-color 0.3s ease; /* Transición del color de fondo */
+  animation: fadeIn 1.5s ease; /* Animación de entrada */
+}
+
+/* Estilos para los input */
+app-custom-input {
+  margin-bottom: 20px;
+  transition: margin-bottom 0.3s ease; /* Transición del margen inferior */
+}
+
+
+
+/* Estilos para los input específicos */
+app-custom-input input {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 12px;
+  width: 100%;
+  transition: all 0.3s ease; /* Transición de todos los estilos */
+}
+
+app-custom-input input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.2);
+}
+
+/* Estilos para el botón de ingresar */
+.submit {
+  transition: background-color 0.3s ease; /* Transición del color de fondo */
+}
+
+.submit:hover {
+  background-color: #0056b3;
+}
+
+/* Estilos para el botón de registro */
+.ion-margin-top {
+  margin-top: 10px;
+  transition: margin-top 0.3s ease; /* Transición del margen superior */
+}
+/* Estilos para el enlace "Forgot Password" */
+.ion-text-end {
+  color: #007bff;
+  text-decoration: none;
+
+
+}
+
+.ion-text-end:hover {
+  cursor: pointer;
+
+
+}
+
+
+/* Animación de entrada */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,76 @@
+<ion-header class="login-content">
+  <div class="d-flex-center">
+    <form [formGroup]="form" class="auth-form" (ngSubmit)="submit()">
+      <app-header class="header" title="Iniciar sesión"></app-header>
+      <app-logo></app-logo>
+      <!-- email -->
+      <app-custom-input
+        autocomplete="email"
+        icon="mail-outline"
+        [control]="form.controls.email"
+        type="email"
+        label="Correo"
+      >
+      </app-custom-input>
+
+      <div
+        class="validators"
+        *ngIf="form.controls.email.errors && form.controls.email.touched"
+      >
+        <div *ngIf="form.controls.email.errors?.['required']">
+          El correo es requerido
+        </div>
+        <div *ngIf="form.controls.email.errors?.['email']">
+          El correo no es valido
+        </div>
+      </div>
+
+      <!-- password -->
+
+      <app-custom-input
+        autocomplete="current-password"
+        icon="lock-closed-outline"
+        [control]="form.controls.password"
+        type="password"
+        label="Contraseña"
+      >
+      </app-custom-input>
+
+      <div
+        class="validators"
+        *ngIf="form.controls.password.errors && form.controls.password.touched"
+      >
+        <div *ngIf="form.controls.password.errors?.['required']">
+          La contraseña es requerida
+        </div>
+      </div>
+
+      <p routerLink="forgot-password" class="ion-text-end">
+        ¿Olvidaste tu contraseña?
+      </p>
+
+      <ion-button
+        style="margin-bottom: 20px"
+        expand="block"
+        mode="ios"
+        class="submit"
+        type="submit"
+        [disabled]="!form.valid"
+      >
+        Ingresar
+        <ion-icon slot="end" name="log-in-outline"></ion-icon>
+      </ion-button>
+
+      <ion-button
+        routerLink="sign-up"
+        class="ion-margin-top"
+        expand="block"
+        mode="ios"
+        fill="outline"
+      >
+        Regístrate
+        <ion-icon slot="end" name="person-add-outline"></ion-icon>
+      </ion-button>
+    </form>
+  </div>
+</ion-header>

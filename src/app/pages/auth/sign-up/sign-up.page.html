@@ -1,0 +1,95 @@
+<ion-header>
+  <div class="sign-up-content">
+    <form [formGroup]="form" class="auth-form" (ngSubmit)="submit()">
+      <ion-icon
+        name="arrow-back-outline"
+        class="back-icon"
+        (click)="navigateBack()"
+      ></ion-icon>
+      <app-header title="Registrarse"> </app-header>
+
+      <app-logo></app-logo>
+
+      <!-- name -->
+
+      <app-custom-input
+        autocomplete="name"
+        icon="person-outline"
+        [control]="form.controls.name"
+        type="text"
+        label="nombre"
+      >
+      </app-custom-input>
+
+      <div
+        class="validators"
+        *ngIf="form.controls.name.errors && form.controls.name.touched"
+      >
+        <div *ngIf="form.controls.name.errors?.['required']">
+          El nombre es requerido
+        </div>
+        <div *ngIf="form.controls.name.errors?.['minlength']">
+          El nombre debe tener al menos 4 caracteres
+        </div>
+      </div>
+
+      <!-- email -->
+      <app-custom-input
+        autocomplete="email"
+        icon="mail-outline"
+        [control]="form.controls.email"
+        type="email"
+        label="correo"
+      >
+      </app-custom-input>
+
+      <div
+        class="validators"
+        *ngIf="form.controls.email.errors && form.controls.email.touched"
+      >
+        <div *ngIf="form.controls.email.errors?.['required']">
+          El correo es requerido
+        </div>
+        <div *ngIf="form.controls.email.errors?.['email']">
+          El correo no es valido
+        </div>
+      </div>
+
+      <!-- password -->
+
+      <app-custom-input
+        autocomplete="current-password"
+        icon="lock-closed-outline"
+        [control]="form.controls.password"
+        type="password"
+        label="contraseña"
+      >
+      </app-custom-input>
+
+      <div
+        class="validators"
+        *ngIf="form.controls.password.errors && form.controls.password.touched"
+      >
+        <div *ngIf="form.controls.password.errors?.['required']">
+          La contraseña es requerida
+        </div>
+      </div>
+
+      <a
+        ><p routerLink="/auth" class="ion-text-end">
+          ¿Ya tienes una cuenta?
+        </p></a
+      >
+
+      <ion-button
+        expand="block"
+        mode="ios"
+        class="submit"
+        type="submit"
+        [disabled]="!form.valid"
+      >
+        Registraterse
+      </ion-button>
+    </form>
+  </div>
+</ion-header>
