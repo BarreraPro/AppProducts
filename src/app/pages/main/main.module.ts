@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { MainPageRoutingModule } from './main-routing.module';
 
 import { MainPage } from './main.page';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
+  declarations: [MainPage],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    MainPageRoutingModule
+    MainPageRoutingModule,
+    SharedModule,
   ],
-  declarations: [MainPage]
 })
 export class MainPageModule {}

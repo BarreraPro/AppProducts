@@ -5,9 +5,9 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import {
   getDownloadURL,
   ref,
-  uploadBytes,
   getStorage,
   uploadString,
+  deleteObject,
 } from 'firebase/storage';
 import {
   getFirestore,
@@ -16,7 +16,11 @@ import {
   getDoc,
   addDoc,
   collection,
-} from 'firebase/firestore';
+  collectionData,
+  query,
+  updateDoc,
+  deleteDoc,
+} from '@angular/fire/firestore';
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -26,7 +30,6 @@ import {
 } from 'firebase/auth';
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -69,6 +72,15 @@ export class FirebaseService {
 
   // _____________Base de datos___________________
 
+  // obtener documentos de una colección
+
+  async getCollectionData(path: string, collectionQuery?: any) {
+    const ref = collection(getFirestore(), path);
+    return collectionData(query(ref, collectionQuery), { idField: 'id' });
+  }
+
+  // agregar documento
+
   async setDocuments(path: string, data: any) {
     console.log('Datos recibidos en setDocuments:', data);
     try {
@@ -79,68 +91,50 @@ export class FirebaseService {
     }
   }
 
+  // obtener documento
+
   async getDocuments(path: string) {
     return (await getDoc(doc(getFirestore(), path))).data();
   }
 
+  // agregar documento
   addDocuments(path: string, data: any) {
     return addDoc(collection(getFirestore(), path), data);
+  }
+
+  // actualizar documento
+
+  async updateDocument(path: string, data: any) {
+    return updateDoc(doc(getFirestore(), path), data);
+  }
+
+  // eliminar documento
+
+  async deleteDocument(path: string) {
+    return deleteDoc(doc(getFirestore(), path));
   }
 
   // _____________Almacenamiento___________________
 
   //subir una imagen
 
-  // async uploadImage(path: string, dataUrl: string) {
-  //   try {
-  //     // Subir la imagen como una cadena a Firebase Storage
-  //     await uploadString(ref(getStorage(), path), dataUrl, 'data_url');
-
-  //     // Obtener la URL de descarga de la imagen
-  //     const downloadURL = await getDownloadURL(ref(getStorage(), path));
-
-  //     return downloadURL;
-  //   } catch (error) {
-  //     // Manejar cualquier error que pueda ocurrir durante la subida de la imagen
-  //     console.error('Error al subir la imagen:', error);
-  //     throw error;
-  //   }
-  // }
-  uploadImage(dataUrl: string, filePath: string): Promise<string> {
-    return new Promise<string>((resolve, reject) => {
-      // Crear una referencia al almacenamiento de Firebase
-      const storageRef = this.storage.ref(filePath);
-
-      // Extraer el contenido base64 de la URL de la imagen
-      const base64Content = dataUrl.split(',')[1];
-
-      // Convertir el contenido base64 en un blob
-      const byteCharacters = atob(base64Content);
-      const byteArrays = new Uint8Array(byteCharacters.length);
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteArrays[i] = byteCharacters.charCodeAt(i);
+  async uploadImage(path: string, dataUrl: string) {
+    return uploadString(ref(getStorage(), path), dataUrl, 'data_url').then(
+      () => {
+        return getDownloadURL(ref(getStorage(), path));
       }
-      const blob = new Blob([byteArrays], { type: 'image/jpeg' });
+    );
+  }
 
-      // Subir el blob al almacenamiento de Firebase
-      const uploadTask = storageRef.put(blob);
+  // obtener ruta  de la imagen con la url
 
-      // Obtener la URL de descarga después de que la carga se complete
-      uploadTask
-        .snapshotChanges()
-        .pipe(
-          finalize(() => {
-            storageRef.getDownloadURL().subscribe(
-              (url) => {
-                resolve(url);
-              },
-              (error) => {
-                reject(error);
-              }
-            );
-          })
-        )
-        .subscribe();
-    });
+  async getFilePath(url: string) {
+    return ref(getStorage(), url).fullPath;
+  }
+
+  // borrar imagen de almacenamiento en firebase
+
+  async deleteImageFile(path: string) {
+    return deleteObject(ref(getStorage(), path));
   }
 }

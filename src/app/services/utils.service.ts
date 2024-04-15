@@ -3,6 +3,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import {
+  AlertController,
+  AlertOptions,
   LoadingController,
   ModalController,
   ModalOptions,
@@ -18,6 +20,7 @@ export class UtilsService {
   toastCtrl = inject(ToastController);
   rotes = inject(Router);
   modalCtrl = inject(ModalController);
+  alertCrtl = inject(AlertController);
 
   async takePicture(promptLabelHeader: string) {
     return await Camera.getPhoto({
@@ -35,11 +38,19 @@ export class UtilsService {
     const loading = await this.loandingCtrl.create({
       message: 'Cargando...',
       duration: 3000,
-      spinner: 'crescent',
+      spinner: 'lines-sharp',
     });
     await loading.present();
   }
 
+  // Alert
+  async presentAlert(opts?: AlertOptions) {
+    const alert = await this.alertCrtl.create(opts);
+
+    await alert.present();
+  }
+
+  // Toast
   async showToast(opts?: ToastOptions) {
     const toast = await this.toastCtrl.create(opts);
     await toast.present();
