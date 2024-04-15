@@ -1,4 +1,5 @@
-Produc App
+Produc App by BARRERA:
+
 Produc App es una plataforma para gestionar productos y realizar un seguimiento de las ganancias generadas por las ventas.
 
 Descripción
@@ -20,7 +21,6 @@ Uso
 Ejecuta la aplicación en tu navegador localmente:
 
 ionic serve
-
 
 Para compilar la aplicación para producción:
 
